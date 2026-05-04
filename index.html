@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>VR Instalações Comerciais</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VR Instalações</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    #cart-panel {
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .product-card {
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Animação do botão flutuante */
+    @keyframes pulse-green {
+      0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+
+    .whatsapp-float {
+      animation: pulse-green 2s infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-50">
+
+  <div id="app" class="relative min-h-screen pb-20">
+    <header class="bg-zinc-900 text-white sticky top-0 z-50 shadow-lg">
+      <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-2xl font-black tracking-tighter uppercase font-sans">VR<span class="text-red-600">Instalações</span></div>
+        <div class="flex-1 max-w-md relative w-full">
+          <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="Buscar equipamento..." class="w-full bg-zinc-800 border-none rounded-full py-2 px-10 text-sm text-white focus:ring-2 focus:ring-red-600 outline-none">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-zinc-500"></i>
+        </div>
+        <div onclick="toggleCart()" class="relative cursor-pointer hover:text-red-600 transition">
+          <i class="fa-solid fa-cart-shopping text-2xl"></i>
+          <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-[10px] rounded-full px-1.5 font-bold border-2 border-zinc-900">0</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="bg-zinc-900 py-16 border-b border-red-600/20">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-tight">
+          Equipamentos para <span class="text-red-600">Supermercado</span> <br class="hidden md:block">
+          e <span class="text-red-600">Refrigeração</span>
+        </h1>
+        <p class="text-zinc-400 text-sm md:text-base mt-4 font-medium max-w-2xl mx-auto">
+          Qualidade industrial para o seu negócio. Performance e durabilidade garantidas.
+        </p>
+      </div>
+    </section>
+
+    <div class="container mx-auto px-4 py-8 flex flex-wrap gap-2 justify-center">
+      <button onclick="filterByCategory('todos')" class="bg-zinc-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase hover:bg-red-600 transition">Todos</button>
+      <button onclick="filterByCategory('padaria')" class="bg-zinc-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase hover:bg-red-600 hover:text-white transition">Padaria</button>
+      <button onclick="filterByCategory('açougue')" class="bg-zinc-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase hover:bg-red-600 hover:text-white transition">Açougue</button>
+      <button onclick="filterByCategory('refrigeração')" class="bg-zinc-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase hover:bg-red-600 transition">Refrigeração</button>
+      <button onclick="filterByCategory('mercado')" class="bg-zinc-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase hover:bg-red-600 transition">Mercado</button>
+      <button onclick="filterByCategory('diversos')" class="bg-zinc-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase hover:bg-red-600 transition">Diversos</button>
+    </div>
+
+    <main class="container mx-auto px-4 py-6">
+
+      <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="padaria">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/hvsPmYKs/Super-oferta-Fogao-inox-4-bocas.png" 
+                 alt="Fogão Inox" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Fogão Inox</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 1.200,00</p>
+          </div>
+          <button onclick="addToCart('Fogão Inox', 1200, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="padaria">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src=imagem-que-vou-fazer 
+                 alt="Cilindro Paulista Lieme" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Cilindro Paulista Lieme</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 3.300,00</p>
+          </div>
+          <button onclick="addToCart('Cilindro Paulista', 3300, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-zinc-900 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="padaria">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/52FxzdKt/Forno-Turbo-Venâncio-Image-4-de-mai-de-2026-09-02-38.png"
+                 alt="Forno Venâncio" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Forno Turbo Venâncio 10 Esteiras</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 4.600,00</p>
+          </div>
+          <button onclick="addToCart('Forno Venâncio', 4600, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="refrigeração">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-centre justify-center">
+            <img src="https://i.postimg.cc/mg4rRc3t/Chat-GPT-Image-28-de-abr-de-2026-10-01-55.png" 
+                 alt="Ar Condicionado 60.000 BTUS" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Ar condicionado 60.000 BTUS</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 9.400,00</p>
+          </div>
+          <button onclick="addToCart('Ar Condicionado', 9400, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="mercado">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/RhFTsT2c/Chat-GPT-Image-4-de-mai-de-2026-09-20-15.png" 
+                 alt="Check-out" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Check-out</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 1.000,00</p>
+          </div>
+          <button onclick="addToCart('Check-out', 1000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="açougue">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/5tfTdcSV/Serra-Fita-Image-23-de-abr-de-2026-09-51-47.png" 
+                 alt="Serra Fita" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Serra Fita</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 10.000,00</p>
+          </div>
+          <button onclick="addToCart('Serra Fita', 10000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="refrigeração">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/h41GNXVj/Super-oferta-Brahma-cooler-em-destaque.png" 
+                 alt="Visa Cooler Brahma" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Visa Cooler Brahma</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 3.500,00</p>
+          </div>
+          <button onclick="addToCart('Visa Cooler Brahma', 3500, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="refrigeração">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/Wpw4xd0p/Super-oferta-balcao-expositor-brilho.png" 
+                 alt="Balcão Expositor" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Balcão Expositor Refrigerado</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 1.200,00</p>
+          </div>
+          <button onclick="addToCart('Balcão Expositor Refrigerado', 1200, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="açougue">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/NMS0S60V/Cilindro-de-Massa-Image-4-de-mai-de-2026-09-40-37.png" 
+                 alt="Fatiador" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Cilindro de Massa</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 1.400,00</p>
+          </div>
+          <button onclick="addToCart('Cilindro de Massa', 1400, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="mercado">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src=imagem-que-vou-fazer 
+                 alt="Ponta de Gôndola" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Ponta de Gôndola</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 1.000,00</p>
+          </div>
+          <button onclick="addToCart('Ponta de Gôndola', 1000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src=imagem-que-vou-fazer 
+                 alt="Escada para Depósitos 3M" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Escada para Depósitos 3M</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 1.900,00</p>
+          </div>
+          <button onclick="addToCart('Escada para Depósito', 1900, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="padaria">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src=imagem-que-vou-fazer 
+                 alt="Forno Prática E250 Turbo Programável" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Forno Prática E250 Turbo Programável</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 22.500,00</p>
+          </div>
+          <button onclick="addToCart('Forno Prática E250 Turbo Programável', 22500, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/BngCx6Ys/Compressor-Bitzer-Image-4-de-mai-de-2026-09-24-48.png" 
+                 alt="Compressor Semi Hermético Bitzer 20HP" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Compressor Semi Hermético Bitzer 20HP</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 9.250,00</p>
+          </div>
+          <button onclick="addToCart('Compressor Semi Hermético Bitzer 20HP', 9250, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="mercado">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/XYyV5S1Y/Bancada-Hortifruti-Image-4-de-mai-de-2026-09-01-12.png" 
+                 alt="Bancada Hortifruti" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Bancada Hortifruti</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 1.200,00</p>
+          </div>
+          <button onclick="addToCart('Bancada Hortifruti', 1200, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="padaria">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/xj3dBXLf/Super-oferta-fatiador-de-paes.png" 
+                 alt="Fatiador de Pães" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Fatiador de Pães</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$ 2.000,00</p>
+          </div>
+          <button onclick="addToCart('Fatiador de Pães',2000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="padaria">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/BvJk9WB3/Forno-Industrial-Image-23-de-abr-de-2026-09-51-33.png" 
+                 alt="Forno Industrial prática C-MAX Gourmet" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Forno Industrial Prática C-MAX Gourmet</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 12.999,00</p>
+          </div>
+          <button onclick="addToCart('Forno Industrial Prática C-MAX Gourmet', 12999, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/8zr1vQXV/Embaladora-a-Vácuo-Image-4-de-mai-de-2026-08-55-37.png" 
+                 alt="Embaladora a Vácuo Inox" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex=grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Embaladora a Vácuo Inox</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$6.000,00</p>
+          </div>
+          <button onclick="addToCart('Embaladora a Vácuo Inox', 6000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover: bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="refrigeração">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/Dwb2Gkpy/Visa-Cooler-Amstel-Image-4-de-mai-de-2026-08-58-14.png" 
+                 alt="Visa Cooler Amstel" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Visa Cooler Amstel</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 2.500,00</p>
+          </div>
+          <button onclick="addToCart('Visa Cooler Amstel', 2500, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/BQMWzX60/Estante-em-Inox-Image-28-de-abr-de-2026-09-42-19.png" 
+                 alt="Prateleiras em Inox" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Prateleiras em Inox</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 2.200,00</p>
+          </div>
+          <button onclick="addToCart('Prateleiras em Inox', 2200, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="refrigeração">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/rsT6B4xk/Camara-fria-Image-28-de-abr-de-2026-09-42-51.png" 
+                 alt="Câmara Fria" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Câmara Fria</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 10.000,00</p>
+          </div>
+          <button onclick="addToCart('Câmara Fria', 10000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="mercado">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/c4XqzrHN/Caixa-Plástica-Image-27-de-abr-de-2026-17-25-06.png" 
+                 alt="Caixa PLástica" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden">Caixa Plástica</h4>
+            <p class="text-red-600 text-2xl font-black mb-4">R$15,00</p>
+          </div>
+          <button onclick="addToCart('Caixa Plástica', 15, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="mercado">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/282ptV6Y/Carrinho-de-Supermercado-Image-28-de-abr-de-2026-09-38-57.png" 
+                 alt="Carrinho de Supermercado" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden"> Carrinho de Supermercado</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$700,00</p>
+          </div>
+          <button onclick="addToCart('Carrinho de Supermercado', 700, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/HkwRhWXY/Buffet-Image-24-de-abr-de-2026-14-42-58.png" 
+                 alt="Buffet em Inox com 8 cubas" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden"> Buffet em Inox com 8 cubas</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 2.500,00</p>
+          </div>
+          <button onclick="addToCart('Buffet em Inox com 8 cubas', 2500, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="refrigeração">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/YC6Zs2gn/Frigobar-Midea-124L-Image-24-de-abr-de-2026-14-43-03.png" 
+                 alt="Frigobar Midea 124L" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden"> Frigobar Midea 124L</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 1.000,00</p>
+          </div>
+          <button onclick="addToCart('Frigobar Midea 124L', 1000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/CLmy2zKW/Pia-Industrial-Image-28-de-abr-de-2026-09-40-24.png" 
+                 alt="Pia Industrial em Inox" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden"> Pia Industrial em Inox</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 3.000,00</p>
+          </div>
+          <button onclick="addToCart('Pia Industrial em Inox', 3000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/7PnLj5Sh/Super-oferta-pia-inox-moderna.png" 
+                 alt="Pia em Inox" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden"> Pia em Inox</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 1.900,00</p>
+          </div>
+          <button onclick="addToCart('Pia em Inox', 1900, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+        </div>
+
+        <div class="product-card bg-white p-6 rounded-lg shadow-md border border-zinc-100 flex flex-col h-full" data-category="diversos">
+          <div class="w-full h-48 mb-4 bg-zinc-50 rounded overflow-hidden flex items-center justify-center">
+            <img src="https://i.postimg.cc/dVTqCPN1/Escada-para-Depósito-Image-4-de-mai-de-2026-08-55-15.png" 
+                 alt="Escada para Depósito" 
+                 class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-bold text-zinc-800 mb-2 uppercase leading-tight h-10 overflow-hidden"> Escada para Depósito</h4>
+            <p class="text-red-600 text-2xl font-black mb-4"> R$ 2.000,00</p>
+          </div>
+          <button onclick="addToCart('Escada para Depósito', 2000, event)" class="w-full bg-zinc-900 text-white py-3 rounded font-bold hover:bg-red-600 transition uppercase text-sm mt-auto">Adicionar</button>
+
+        </div>
+      </div>
+
+      <div id="cart-panel" class="fixed right-0 top-0 h-full w-96 bg-white shadow-[0_0_50px_rgba(0,0,0,0.2)] z-[100] translate-x-full transition-all duration-500 p-0 flex flex-col">
+        <div class="p-6 border-b flex justify-between items-center bg-zinc-50">
+          <h2 class="text-xl font-black uppercase tracking-tighter text-zinc-800">Seu Carrinho</h2>
+          <button onclick="toggleCart()" class="text-zinc-400 hover:text-red-600 transition text-2xl">&times;</button>
+        </div>
+
+        <div id="cart-items-list" class="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
+        </div>
+
+        <div class="p-6 border-t border-zinc-100 bg-zinc-50 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
+          <div class="flex justify-between items-end mb-6">
+            <span class="text-zinc-400 font-bold uppercase text-xs tracking-widest">Total do Pedido</span>
+            <span id="cart-total-value" class="text-3xl font-black text-red-600">R$ 0,00</span>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <button onclick="finalizarCompra()" class="w-full bg-red-600 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-zinc-900 transition-all shadow-lg shadow-red-100 active:scale-95">
+              Finalizar Pedido
+            </button>
+
+            <button onclick="toggleCart()" class="w-full bg-transparent border-2 border-zinc-200 text-zinc-500 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:bg-zinc-100 hover:text-zinc-800 transition-all">
+              Continuar Comprando
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://wa.me/5551989811313" target="_blank" class="whatsapp-float fixed bottom-6 right-6 z-[100] bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 hover:scale-110 transition-all group">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+
+      </a>
+
+  </div>
+
+  </main>
+  <div id="cart-panel" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-[100] translate-x-full transition-transform duration-300 p-6 flex flex-col">
+    <h2 class="text-xl font-bold border-b pb-4 mb-4 uppercase">Carrinho</h2>
+    <div id="cart-items-list" class="flex-1 overflow-y-auto"></div>
+    <div class="border-t pt-4">
+      <div class="flex justify-between font-bold mb-4"><span>Total:</span><span id="cart-total-value">R$ 0,00</span></div>
+      <button onclick="toggleCart()" class="w-full bg-red-600 text-white py-3 rounded font-black uppercase hover:bg-zinc-900 transition">Fechar</button>
+    </div>
+    <button onclick="toggleCart()" class="w-full bg-zinc-200 text-zinc-700 py-2 rounded font-bold uppercase text-xs">Continuar Comprando</button>
+  </div>
+  </div>
+
+  <footer class="bg-zinc-900 text-zinc-400 py-10 mt-20 border-t border-zinc-800 w-full">
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h5 class="text-white font-black uppercase mb-4">VR Instalações</h5>
+        <p class="text-sm">Especialistas em montagens comerciais completas.</p>
+      </div>
+      <div>
+        <h5 class="text-white font-black uppercase mb-4">Contato</h5>
+        <p class="text-sm">📍 Porto Alegre, Rio Grande do Sul, Brasil</p>
+        <p class="text-sm text-red-600 font-bold mt-1">📞 (51) 98981-1313</p>
+      </div>
+      <div>
+        <h5 class="text-white font-black uppercase mb-4">Horário</h5>
+        <p class="text-sm">Segunda a Sexta: 08:00 - 18:00 Sábado e Domingo: 14:00 - 18:00
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  </div>
+
+  <script>
+    let cart = [];
+
+    function toggleCart() {
+      const panel = document.getElementById('cart-panel');
+      panel.classList.toggle('translate-x-full');
+    }
+
+    function addToCart(name, price) {
+      cart.push({
+        name,
+        price
+      });
+      updateCart();
+      // Feedback visual simples
+      const btn = event.currentTarget;
+      btn.innerText = "Adicionado!";
+      setTimeout(() => btn.innerText = "Adicionar", 1000);
+    }
+
+    function updateCart() {
+      const list = document.getElementById('cart-items-list');
+      const count = document.getElementById('cart-count');
+      const total = document.getElementById('cart-total-value');
+      list.innerHTML = '';
+      let totalValue = 0;
+      cart.forEach((item, index) => {
+        totalValue += item.price;
+        list.innerHTML += `
+                <div class="flex justify-between items-center bg-zinc-50 p-3 rounded border border-zinc-100">
+                    <div class="text-xs">
+                        <p class="font-bold text-zinc-800 uppercase">${item.name}</p>
+                        <p class="text-red-600 font-black">R$ ${item.price.toLocaleString('pt-br', {minimumFractionDigits: 2})}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-zinc-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `;
+      });
+      count.innerText = cart.length;
+      total.innerText = `R$ ${totalValue.toLocaleString('pt-br', {minimumFractionDigits: 2})}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function filterProducts() {
+      const input = document.getElementById('search-input').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const title = card.querySelector('h4').innerText.toLowerCase();
+        card.style.display = title.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    function filterByCategory(category) {
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (category === 'todos') {
+          card.style.display = 'block';
+        } else {
+          const cardCat = card.getAttribute('data-category');
+          card.style.display = (cardCat === category) ? 'block' : 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>

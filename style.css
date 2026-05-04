@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+/* Efeito nos Cards de Produto */
+.product-card {
+  transition: all 0.3s ease;
+  border: 1px solid #f4f4f5;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+  border-color: #ef4444;
+}
+
+/* Scroll do Carrinho - Corrigido para o ID novo */
+#cart-items-list::-webkit-scrollbar {
+  width: 5px;
+}
+#cart-items-list::-webkit-scrollbar-thumb {
+  background: #ef4444;
+  border-radius: 10px;
+}
+
+/* --- AJUSTES DO CARRINHO (O que mudou) --- */
+
+#cart-panel {
+  z-index: 100 !important; /* Faz o carrinho ganhar do WhatsApp */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Estado Aberto */
+#cart-panel:not(.translate-x-full) {
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Ajuste do WhatsApp para ele ficar "atrás" */
+.whatsapp-float,
+.fixed.bottom-6 {
+  z-index: 50 !important; /* Menor que o do carrinho */
+  animation: pulse-green 2s infinite;
+}
+
+/* ---------------------------------------- */
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Animação do Botão WhatsApp */
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* Força o título a não cortar e quebrar para a linha de baixo */
+.product-card h4 {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  max-height: 3.5rem;
+}
